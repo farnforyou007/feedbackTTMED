@@ -1,9 +1,10 @@
-# ไฟล์ .gitignore
-supabase-server/
-docker/
-.env
-node_modules/
-# .gitignore
+# 1. ห้ามเอาไฟล์รหัสผ่านและความลับขึ้น Git
 supabase-server/docker/.env
+
+# 2. ห้ามเอาข้อมูลในฐานข้อมูล (ไฟล์ดิบของ Postgres) ขึ้น Git 
+# เพราะมันใหญ่มากและจะทำให้เพื่อนรันไม่ขึ้นเพราะติดเรื่อง Permission
 supabase-server/docker/volumes/
-supabase-server
+
+# 3. ไฟล์ขยะอื่นๆ ของระบบ
+.DS_Store
+Thumbs.db
