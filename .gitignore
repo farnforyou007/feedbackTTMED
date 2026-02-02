@@ -1,0 +1,8 @@
+# ไฟล์ .gitignore
+supabase-server/
+docker/
+.env
+node_modules/
+# .gitignore
+supabase-server/docker/.env
+supabase-server/docker/volumes/
