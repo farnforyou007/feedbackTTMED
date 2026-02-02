@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>report.html</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Pikaday -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
+
+  <style>
+    body {
+      font-family: "Prompt", sans-serif;
+    }
+  </style>
+</head>
+
+<body class="bg-slate-100">
+
+  <div class="max-w-7xl mx-auto bg-white rounded-2xl shadow-lg my-10 p-6">
+    <div class="grid grid-cols-12 gap-6">
+
+      <!-- LEFT -->
+      <div class="col-span-12 md:col-span-3 border-r">
+
+        <div class="flex flex-col items-center text-center py-6">
+          <img id="showPhoto"
+            class="w-36 h-36 rounded-full object-cover border-4 border-slate-200 mb-3"
+            src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+
+          <span id="showName" class="font-semibold"></span>
+          <span id="showPosition" class="text-sm text-slate-500"></span>
+        </div>
+
+        <!-- DATE -->
+        <div class="grid grid-cols-2 gap-3 mt-4">
+          <div>
+            <label class="text-xs text-slate-500">ตั้งแต่วันที่</label>
+            <input id="start-date" type="text"
+              class="w-full rounded-lg border px-3 py-2 text-sm">
+          </div>
+          <div>
+            <label class="text-xs text-slate-500">ถึงวันที่</label>
+            <input id="end-date" type="text"
+              class="w-full rounded-lg border px-3 py-2 text-sm">
+          </div>
+        </div>
+
+        <!-- CHECKBOX -->
+        <div class="mt-5 space-y-2 text-sm">
+
+          <label class="flex items-center gap-2">
+            <input class="accent-blue-600"
+                  type="checkbox"
+                  name="myCheckbox"
+                  value="นักศึกษาปริญญาตรี"
+                  checked>
+            นักศึกษาปริญญาตรี
+          </label>
+
+          <label class="flex items-center gap-2">
+            <input class="accent-blue-600"
+                  type="checkbox"
+                  name="myCheckbox"
+                  value="นักศึกษาบัณฑิตศึกษา"
+                  checked>
+            นักศึกษาบัณฑิตศึกษา
+          </label>
+
+          <label class="flex items-center gap-2">
+            <input class="accent-blue-600"
+                  type="checkbox"
+                  name="myCheckbox"
+                  value="อาจารย์"
+                  checked>
+            อาจารย์
+          </label>
+
+          <label class="flex items-center gap-2">
+            <input class="accent-blue-600"
+                  type="checkbox"
+                  name="myCheckbox"
+                  value="นักวิทยาศาสตร์"
+                  checked>
+            นักวิทยาศาสตร์
+          </label>
+
+          <label class="flex items-center gap-2">
+            <input class="accent-blue-600"
+                  type="checkbox"
+                  name="myCheckbox"
+                  value="บุคลากรสํานักงานบริหารคณะ"
+                  checked>
+            บุคลากรสํานักงานฯ
+          </label>
+
+          <label class="flex items-center gap-2">
+            <input class="accent-blue-600"
+                  type="checkbox"
+                  name="myCheckbox"
+                  value="บุคลากรโรงพยาบาล"
+                  checked>
+            บุคลากรโรงพยาบาล
+          </label>
+
+          <label class="flex items-center gap-2">
+            <input class="accent-blue-600"
+                  type="checkbox"
+                  name="myCheckbox"
+                  value="ผู้ใช้บริการโรงพยาบาล"
+                  checked>
+            ผู้ใช้บริการโรงพยาบาล
+          </label>
+        </div>
+
+        <div class="text-center mt-6">
+          <button onclick="show()"
+            class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-2 rounded-full font-semibold transition">
+            แสดงผล
+          </button>
+        </div>
+      </div>
+
+      <!-- CENTER -->
+      <div class="col-span-12 md:col-span-5 border-r px-2">
+
+        <h4 class="text-lg font-semibold mb-4">
+          จำนวนผู้เข้าประเมินทั้งหมด <span id="countTotal" class="text-blue-600"></span> คน
+        </h4>
+
+        <div class="grid grid-cols-2 gap-4 text-center">
+          <div class="bg-slate-50 rounded-xl p-4 shadow">
+            <p class="text-sm">นักศึกษาปริญญาตรี</p>
+            <p id="countStudentUG" class="text-2xl font-bold text-blue-700"></p>
+          </div>
+          <div class="bg-slate-50 rounded-xl p-4 shadow">
+            <p class="text-sm">นักศึกษาบัณฑิตศึกษา</p>
+            <p id="countStudentGD" class="text-2xl font-bold text-blue-700"></p>
+          </div>
+          <div class="bg-slate-50 rounded-xl p-4 shadow">
+            <p class="text-sm">อาจารย์</p>
+            <p id="countLecturer" class="text-2xl font-bold text-blue-700"></p>
+          </div>
+          <div class="bg-slate-50 rounded-xl p-4 shadow">
+            <p class="text-sm">นักวิทยาศาสตร์</p>
+            <p id="countScientist" class="text-2xl font-bold text-blue-700"></p>
+          </div>
+          <div class="bg-slate-50 rounded-xl p-4 shadow">
+            <p class="text-sm">บุคลากรสํานักงานฯ</p>
+            <p id="countStaffOffice" class="text-2xl font-bold text-blue-700"></p>
+          </div>
+          <div class="bg-slate-50 rounded-xl p-4 shadow">
+            <p class="text-sm">บุคลากรโรงพยาบาล</p>
+            <p id="countStaffHospital" class="text-2xl font-bold text-blue-700"></p>
+          </div>
+          <div class="bg-slate-50 rounded-xl p-4 shadow col-span-2">
+            <p class="text-sm">ผู้ใช้บริการโรงพยาบาล</p>
+            <p id="countCustomer" class="text-2xl font-bold text-blue-700"></p>
+          </div>
+        </div>
+
+        <!-- PROGRESS -->
+        <div class="mt-6 space-y-5">
+          <div>
+            <div class="flex justify-between font-semibold text-sm">
+              <span>ความรวดเร็ว</span>
+              <span id="statSpeed"></span>
+            </div>
+            <div class="h-2 bg-slate-200 rounded-full">
+              <div id="progress-speed" class="h-2 bg-blue-500 rounded-full w-0"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between font-semibold text-sm">
+              <span>ความถูกต้อง</span>
+              <span id="statAccuracy"></span>
+            </div>
+            <div class="h-2 bg-slate-200 rounded-full">
+              <div id="progress-accuracy" class="h-2 bg-green-500 rounded-full w-0"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between font-semibold text-sm">
+              <span>จิตบริการ</span>
+              <span id="statService"></span>
+            </div>
+            <div class="h-2 bg-slate-200 rounded-full">
+              <div id="progress-service" class="h-2 bg-orange-500 rounded-full w-0"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 mt-6">
+          <div class="bg-slate-50 p-4 rounded-xl shadow">
+            <p class="text-sm">ค่า X̅ เฉลี่ยรวม</p>
+            <p id="xbarTotal" class="text-xl font-bold">0.00</p>
+          </div>
+          <div class="bg-slate-50 p-4 rounded-xl shadow">
+            <p class="text-sm">ค่า SD เฉลี่ยรวม</p>
+            <p id="sdTotal" class="text-xl font-bold">0.00</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT -->
+      <div class="col-span-12 md:col-span-4">
+        <h5 class="font-semibold mb-3">ข้อคิดเห็นและเสนอแนะ</h5>
+        <div class="max-h-[750px] overflow-auto space-y-3">
+          <ul id="commentList" class="space-y-3 text-sm"></ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <?!= include ('js') ?>
+</body>
+</html>

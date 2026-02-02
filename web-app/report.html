@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>report.html</title>
+    <link rel="stylesheet" href="static/report.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <div class="container rounded bg-white mt-5 mb-5">
+        <div class="row">
+            <div class="col-md-3 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5"
+                        width="150px"
+                        src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span
+                        class="font-weight-bold">นิติ โชติแก้ว</span><span
+                        class="text-black-50">นักวิชาการคอมพิวเตอร์</span><span> </span></div>
+
+                <div class="row mt-3">
+                    <div class="col-md-6"><label class="labels">ตั้งแต่วันที่</label><input type="text" id="start-date"
+                            class="form-control" value=""></div>
+                    <div class="col-md-6"><label class="labels">ถึงวันที่</label><input type="text" id="end-date"
+                            class="form-control" value="" placeholder="dd-mm-yyyy"></div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <input class="form-check-input" type="checkbox" name="myCheckbox" value="นักศึกษาปริญญาตรี"
+                            checked>
+                        <label class="labels">นักศึกษาปริญญาตรี</label>
+                    </div>
+                    <div class="col-md-6">
+                        <input class="form-check-input" type="checkbox" name="myCheckbox" value="นักศึกษาบัณฑิตศึกษา"
+                            checked>
+                        <label class="labels">นักศึกษาบัณฑิตศึกษา</label>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <input class="form-check-input" type="checkbox" name="myCheckbox" value="อาจารย์" checked>
+                        <label class="labels">อาจารย์</label>
+                    </div>
+                    <div class="col-md-6">
+                        <input class="form-check-input" type="checkbox" name="myCheckbox" value="นักวิทยาศาสตร์"
+                            checked>
+                        <label class="labels">นักวิทยาศาสตร์</label>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <input class="form-check-input" type="checkbox" name="myCheckbox"
+                            value="บุคลากรสํานักงานบริหารคณะ" checked>
+                        <label class="labels">บุคลากรสํานักงานฯ</label>
+                    </div>
+                    <div class="col-md-6">
+                        <input class="form-check-input" type="checkbox" name="myCheckbox" value="บุคลากรโรงพยาบาล"
+                            checked>
+                        <label class="labels">บุคลากรโรงพยาบาล</label>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <input class="form-check-input" type="checkbox" name="myCheckbox" value="ผู้ใช้บริการโรงพยาบาล"
+                            checked>
+                        <label class="labels">ผู้ใช้บริการโรงพยาบาล</label>
+                    </div>
+                </div>
+                <div class="mt-5 text-center"><button class="btn btn-primary profile-button" onclick="show()"
+                        type="button">แสดงผล</button></div>
+            </div>
+            <div class="col-md-5 border-right">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-right">จำนวนผู้เข้าประเมินหมด <span id="countTotal"></span> คน</h4>
+                    </div>
+                    <div class="row mt-2">
+                        <label class="labels">แบ่งประเภทเป็น:</label>
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">นักศึกษาปริญญาตรี</h5>
+                                    <p class="card-text"><span id="countStudentUG"></span> คน</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">นักศึกษาบัณฑิตศึกษา</h5>
+                                    <p class="card-text"><span id="countStudentGD"></span> คน</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">อาจารย์</h5>
+                                    <p class="card-text"><span id="countLecturer"></span> คน</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">นักวิทยาศาสตร์</h5>
+                                    <p class="card-text"><span id="countScientist"></span> คน</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">บุคลากรสํานักงานฯ</h5>
+                                    <p class="card-text"><span id="countStaffOffice"></span> คน</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">บุคลากรโรงพยาบาล</h5>
+                                    <p class="card-text"><span id="countStaffHospital"></span> คน</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">ผู้ใช้บริการโรงพยาบาล</h5>
+                                    <p class="card-text"><span id="countCustomer"></span> คน</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+
+                            <div class="mt-3">
+                                <div class="row">
+                                    <div class="col-6 fw-bold">ความรวดเร็ว</div>
+                                    <div class="col-6 text-end"><span id="statSpeed"></span></div>
+                                </div>
+                                <div class="progress mb-3" style="height: 10px">
+                                    <div id="progress-speed" class="progress-bar bg-info" role="progressbar"
+                                        style="width: 0%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-5">
+                                <div class="row">
+                                    <div class="col-6 fw-bold">ความถูกต้อง</div>
+                                    <div class="col-6 text-end"><span id="statAccuracy"></span></div>
+                                </div>
+                                <div class="progress mb-3" style="height: 10px">
+                                    <div id="progress-accuracy" class="progress-bar bg-info" role="progressbar"
+                                        style="width: 0%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-5">
+                                <div class="row">
+                                    <div class="col-6 fw-bold">จิตบริการ</div>
+                                    <div class="col-6 text-end"><span id="statService"></span></div>
+                                </div>
+                                <div class="progress mb-3" style="height: 10px">
+                                    <div id="progress-service" class="progress-bar bg-info" role="progressbar"
+                                        style="width: 0%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-6"><label class="">ค่า X̅ เฉลี่ยรวมทั้ง 3 ด้าน</label>
+                            <h4 id="xbarTotal">0.00</h4>
+                        </div>
+                        <div class="col-md-6"><label class="">ค่า sd เฉลี่ยรวมทั้ง 3 ด้าน</label>
+                            <h4 id="sdTotal">0.00</h4>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center experience">
+                        <span>ข้อคิดเห็นและเสนอแนะ</span>
+                        <!-- <span class="border px-3 p-1 add-experience"><i
+                                class="fa fa-plus"></i>&nbsp;Experience</span> -->
+
+                    </div><br>
+                    <div class="col-md-12">
+                        <div style="height: 750px; overflow: auto;">
+                            <ul id="commentList">
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+<script src="settings.js"></script>
+<script src="report.js"></script>
+
+</html>

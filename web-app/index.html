@@ -1,0 +1,252 @@
+<!-- <a href="https://script.google.com/macros/s/AKfycbx3yrNCz1tBfY_kiFF68g7Hmbuy8-okAQ6x5t5CoJCbS-_Vf0-NsVf2vcImUdymheSn/exec" target="_blank" rel="noopener noreferrer" style="color: #b3b0b0;"><i class="bi bi-info-circle"></i></a>  -->
+<!-- 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>index.html</title>
+    <link rel="stylesheet" href="static/card.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+</head>
+
+<body>
+    <div class="container d-flex justify-content-center mt-5">
+        <div class="card text-center mb-5">
+          <form id="dataForm" class="needs-validation" novalidate>
+                <div class="circle-image">
+                    <img id="post-image" src="https://www.ttmed.psu.ac.th/th/static/images/staff/new.jpg" alt="Post Image" />
+                </div>
+                <span class="dot">
+                    <a href="https://script.google.com/macros/s/AKfycbxAZ9JoTub-rvwtGEKxCPVyOUHvPTKcrEnQLFx2U5BtEeJiQAwTQ2kSIzN_WyI2U35w/exec" target="_blank" rel="noopener noreferrer" style="color: #b3b0b0;"><i class="bi bi-info-circle"></i></a> 
+                </span>
+
+                <div id="data-container">
+                <input type="hidden" id="post-username" value="" />
+                </div>
+          
+            <div class="px-4 mt-3">
+                    <select class="form-select" id="type" name="type" required>
+                        <option selected disabled value="">โปรดระบุสถานะผู้ทำประมิน...</option>
+                        <option value="นักศึกษาปริญญาตรี">นักศึกษาปริญญาตรี</option>
+                        <option value="นักศึกษาบัณฑิตศึกษา">นักศึกษาบัณฑิตศึกษา</option>
+                        <option value="อาจารย์">อาจารย์</option>
+                        <option value="นักวิทยาศาสตร์">นักวิทยาศาสตร์</option>
+                        <option value="บุคลากรสํานักงานบริหารคณะ">บุคลากรสํานักงานบริหารคณะ</option>
+                        <option value="บุคลากรโรงพยาบาล">บุคลากรโรงพยาบาล</option>
+                        <option value="ผู้ใช้บริการโรงพยาบาล">ผู้ใช้บริการโรงพยาบาล</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Please select a valid.
+                      </div>
+            </div>
+
+            <div class="rate bg-success py-3 text-white mt-3">
+                <h6 class="mb-0 fs-4">ความรวดเร็ว</h6>
+                <div class="rating">
+                    <input type="radio" name="speed" value="5" id="speed5" /><label for="speed5">☆</label>
+                    <input type="radio" name="speed" value="4" id="speed4" /><label for="speed4">☆</label>
+                    <input type="radio" name="speed" value="3" id="speed3" /><label for="speed3">☆</label>
+                    <input type="radio" name="speed" value="2" id="speed2" /><label for="speed2">☆</label>
+                    <input type="radio" name="speed" value="1" id="speed1" /><label for="speed1">☆</label>
+                </div>
+
+                <h6 class="mb-0 fs-4">ความถูกต้อง</h6>
+                <div class="rating">
+                    <input type="radio" name="accuracy" value="5" id="accuracy5" /><label for="accuracy5">☆</label>
+                    <input type="radio" name="accuracy" value="4" id="accuracy4" /><label for="accuracy4">☆</label>
+                    <input type="radio" name="accuracy" value="3" id="accuracy3" /><label for="accuracy3">☆</label>
+                    <input type="radio" name="accuracy" value="2" id="accuracy2" /><label for="accuracy2">☆</label>
+                    <input type="radio" name="accuracy" value="1" id="accuracy1" /><label for="accuracy1">☆</label>
+                </div>
+                <h6 class="mb-0 fs-4">จิตบริการ</h6>
+                <div class="rating">
+                    <input type="radio" name="service" value="5" id="service5" /><label for="service5">☆</label>
+                    <input type="radio" name="service" value="4" id="service4" /><label for="service4">☆</label>
+                    <input type="radio" name="service" value="3" id="service3" /><label for="service3">☆</label>
+                    <input type="radio" name="service" value="2" id="service2" /><label for="service2">☆</label>
+                    <input type="radio" name="service" value="1" id="service1" /><label for="service1">☆</label>
+                </div>
+
+                <div class="px-4 mt-3">
+                    <input type="text" class="form-control bg-success text-white border border-light" name="comment" id="comment" placeholder="เขียนข้อคิดเห็นและเสนอแนะ" autofocus>
+                </div>
+
+                <div class="buttons px-4 mt-0">
+                    <button class="btn btn-warning btn-block rating-submit">
+                        Submit
+                    </button>
+                </div>
+            </div>
+          </form>
+        </div>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="card.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+</html> -->
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Feedback System - TTMED PSU</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Prompt', sans-serif;
+        }
+
+        /* สไตล์พิเศษสำหรับระบบดาว */
+        .star-rating {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: center;
+        }
+
+        .star-rating input {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+            pointer-events: none;
+            /* ป้องกันการไปกดโดนโดยตรง */
+        }
+
+        .star-rating label {
+            font-size: 2.5rem;
+            color: #d1d5db;
+            /* gray-300 */
+            cursor: pointer;
+            transition: all 0.2s;
+            padding: 0 2px;
+        }
+
+        .star-rating label:hover,
+        .star-rating label:hover~label,
+        .star-rating input:checked~label {
+            color: #fbbf24;
+            /* amber-400 */
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-br from-[#667eea] to-[#764ba2] min-h-screen flex items-center justify-center p-4">
+
+    <div
+        class="bg-white/95 backdrop-blur-md rounded-[2rem] shadow-2xl w-full max-w-[450px] overflow-hidden border border-white/20">
+        <form id="dataForm" class="relative">
+            <div class="bg-white pt-10 pb-4 px-6 text-center relative">
+                <a href="https://script.google.com/macros/s/AKfycbxAZ9JoTub-rvwtGEKxCPVyOUHvPTKcrEnQLFx2U5BtEeJiQAwTQ2kSIzN_WyI2U35w/exec"
+                    class="absolute top-6 right-6 text-gray-400 hover:text-indigo-500 transition-colors">
+                    <i class="bi bi-info-circle-fill text-xl"></i>
+                </a>
+
+                <div
+                    class="w-32 h-32 mx-auto mb-4 rounded-full border-4 border-white shadow-lg overflow-hidden flex items-center justify-center bg-gray-50">
+                    <img id="post-image" src="" alt="Profile" class="w-full h-full object-cover">
+                </div>
+
+                <input type="hidden" id="post-username" name="post-username" value="">
+
+                <div id="data-container" class="space-y-1">
+                </div>
+            </div>
+
+            <div class="px-8 pb-10 space-y-5">
+                <div>
+                    <select id="type" name="type" required
+                        class="w-full p-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-400 focus:outline-none bg-white transition-all">
+                        <option selected disabled value="">โปรดระบุสถานะผู้ทำประมิน...</option>
+                        <option value="นักศึกษาปริญญาตรี">นักศึกษาปริญญาตรี</option>
+                        <option value="นักศึกษาบัณฑิตศึกษา">นักศึกษาบัณฑิตศึกษา</option>
+                        <option value="อาจารย์">อาจารย์</option>
+                        <option value="นักวิทยาศาสตร์">นักวิทยาศาสตร์</option>
+                        <option value="บุคลากรสํานักงานบริหารคณะ">บุคลากรสํานักงานบริหารคณะ</option>
+                        <option value="บุคลากรโรงพยาบาล">บุคลากรโรงพยาบาล</option>
+                        <option value="ผู้ใช้บริการโรงพยาบาล">ผู้ใช้บริการโรงพยาบาล</option>
+                    </select>
+                </div>
+
+
+
+                <div class="space-y-2">
+                    <div class="bg-gray-50 p-3 rounded-xl border border-gray-100">
+                        <p class="text-center font-semibold text-gray-700 text-sm mb-1">ความรวดเร็วในการให้บริการ</p>
+                        <div class="star-rating">
+                            <input type="radio" name="speed" id="s5" value="5" required><label for="s5"
+                                class="text-3xl">★</label>
+                            <input type="radio" name="speed" id="s4" value="4"><label for="s4"
+                                class="text-3xl">★</label>
+                            <input type="radio" name="speed" id="s3" value="3"><label for="s3"
+                                class="text-3xl">★</label>
+                            <input type="radio" name="speed" id="s2" value="2"><label for="s2"
+                                class="text-3xl">★</label>
+                            <input type="radio" name="speed" id="s1" value="1"><label for="s1"
+                                class="text-3xl">★</label>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 p-3 rounded-xl border border-gray-100">
+                        <p class="text-center font-semibold text-gray-700 text-sm mb-1">ความถูกต้องและครบถ้วน</p>
+                        <div class="star-rating">
+                            <input type="radio" name="accuracy" id="a5" value="5" required><label for="a5"
+                                class="text-3xl">★</label>
+                            <input type="radio" name="accuracy" id="a4" value="4"><label for="a4"
+                                class="text-3xl">★</label>
+                            <input type="radio" name="accuracy" id="a3" value="3"><label for="a3"
+                                class="text-3xl">★</label>
+                            <input type="radio" name="accuracy" id="a2" value="2"><label for="a2"
+                                class="text-3xl">★</label>
+                            <input type="radio" name="accuracy" id="a1" value="1"><label for="a1"
+                                class="text-3xl">★</label>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 p-3 rounded-xl border border-gray-100">
+                        <p class="text-center font-semibold text-gray-700 text-sm mb-1">ความสุภาพและจิตบริการ</p>
+                        <div class="star-rating">
+                            <input type="radio" name="service" id="v5" value="5" required><label for="v5"
+                                class="text-3xl">★</label>
+                            <input type="radio" name="service" id="v4" value="4"><label for="v4"
+                                class="text-3xl">★</label>
+                            <input type="radio" name="service" id="v3" value="3"><label for="v3"
+                                class="text-3xl">★</label>
+                            <input type="radio" name="service" id="v2" value="2"><label for="v2"
+                                class="text-3xl">★</label>
+                            <input type="radio" name="service" id="v1" value="1"><label for="v1"
+                                class="text-3xl">★</label>
+                        </div>
+                    </div>
+
+                </div>
+
+                <textarea name="comment" id="comment" rows="2" placeholder="ข้อเสนอแนะเพิ่มเติม..."
+                    class="w-full p-4 rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-400 focus:outline-none"></textarea>
+
+                <button type="submit"
+                    class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-bold rounded-xl shadow-lg hover:shadow-indigo-200 hover:-translate-y-0.5 transition-all">
+                    ส่งข้อมูลการประเมิน
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="card.js"></script>
+</body>
+
+</html>

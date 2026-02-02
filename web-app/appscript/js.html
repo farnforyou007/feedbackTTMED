@@ -1,0 +1,223 @@
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+
+<script>
+(function () {
+
+  const startInput = document.getElementById("start-date");
+  const endInput   = document.getElementById("end-date");
+
+  const today = new Date();
+  const currentYear = today.getFullYear();
+  const currentMonth = today.getMonth();
+
+  // ค่าเริ่มต้นตามปีงบ
+  const baseYear = currentMonth < 5 ? currentYear - 1 : currentYear;
+  const defaultStart = new Date(`${baseYear}-06-01`);
+  const defaultEnd   = new Date(`${baseYear + 1}-05-31`);
+
+  let isSyncing = false;
+
+  function addYearMinusOneDay(date) {
+    const d = new Date(date);
+    d.setFullYear(d.getFullYear() + 1);
+    d.setDate(d.getDate() - 1);
+    return d;
+  }
+
+  function minusYearPlusOneDay(date) {
+    const d = new Date(date);
+    d.setFullYear(d.getFullYear() - 1);
+    d.setDate(d.getDate() + 1);
+    return d;
+  }
+
+  const startPicker = new Pikaday({
+    field: startInput,
+    format: "YYYY-MM-DD",
+    defaultDate: defaultStart,
+    setDefaultDate: true,
+    onSelect: function (date) {
+      if (isSyncing) return;
+      isSyncing = true;
+
+      const endDate = addYearMinusOneDay(date);
+      endPicker.setDate(endDate, true);
+
+      isSyncing = false;
+    }
+  });
+
+  const endPicker = new Pikaday({
+    field: endInput,
+    format: "YYYY-MM-DD",
+    defaultDate: defaultEnd,
+    setDefaultDate: true,
+    onSelect: function (date) {
+      if (isSyncing) return;
+      isSyncing = true;
+
+      const startDate = minusYearPlusOneDay(date);
+      startPicker.setDate(startDate, true);
+
+      isSyncing = false;
+    }
+  });
+
+  getEmail();
+
+})();
+
+function show() {
+    fetchData();
+}
+
+function fetchData() {
+     
+    const API_URL = 'https://script.google.com/macros/s/AKfycbwb7SuSZszPyorEu8106QfEylzNs7EZyFWhQ2qANJXDamkL2MSCkALTIgqsRZoiD2c/exec';
+    const sheetParam = 'Data';
+    const startParam = document.getElementById('start-date').value;
+    const endParam = document.getElementById('end-date').value;
+    const NameParam = sessionStorage.getItem("username");
+    const checkboxes = document.querySelectorAll('input[name="myCheckbox"]:checked');
+    const TypeParam = Array.from(checkboxes).map(checkbox => checkbox.value);
+    const list = document.getElementById('commentList');
+
+    list.innerHTML = '';
+
+    Swal.fire({
+        title: 'กรุณารอสักครู่...',
+        text: 'ระบบกำลังประมวลผลข้อมูล',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+
+                    axios.get(`${API_URL}?sheet=${sheetParam}&startDate=${startParam}&endDate=${endParam}&filterName=${NameParam}&filterType=${TypeParam}`, {
+                        headers: {
+                            "Content-Type": "application/json"
+                           },
+                        })
+                        .then(response => {
+                            //console.log('GET Response:', response.data);
+
+                            let data = response.data;
+                            let stat_type = [];
+                            let stat_speed = [];
+                            let stat_accuracy = [];
+                            let stat_service = [];
+
+                            data.forEach(row => {
+                               stat_type.push(row.type);
+                               stat_speed.push(parseFloat(row.speed));
+                               stat_accuracy.push(parseFloat(row.accuracy));
+                               stat_service.push(parseFloat(row.service));
+
+                                if(row.comment){
+                                   // stat_comment.push(row.comment);
+                                   let newItem = document.createElement('li');
+                                    newItem.textContent = row.comment;
+                                    list.appendChild(newItem);
+                                }
+                               
+
+                            });
+
+                            let xbar_speed = getMean(stat_speed);
+                            let xbar_accuracy = getMean(stat_accuracy);
+                            let xbar_service = getMean(stat_service);
+                            let xbar_total = (xbar_speed + xbar_accuracy + xbar_service) / 3;
+
+                            let sd_speed = getSD(stat_speed);
+                            let sd_accuracy = getSD(stat_accuracy);
+                            let sd_service = getSD(stat_service);
+                            let sd_total = (sd_speed + sd_accuracy + sd_service) / 3;
+
+
+
+                            document.getElementById('countTotal').textContent = data.length;
+                            document.getElementById('countStudentUG').textContent = stat_type.filter(c => c === 'นักศึกษาปริญญาตรี').length;
+                            document.getElementById('countStudentGD').textContent = stat_type.filter(c => c === 'นักศึกษาบัณฑิตศึกษา').length;
+                            document.getElementById('countLecturer').textContent = stat_type.filter(c => c === 'อาจารย์').length;
+                            document.getElementById('countScientist').textContent = stat_type.filter(c => c === 'นักวิทยาศาสตร์').length;
+                            document.getElementById('countStaffOffice').textContent = stat_type.filter(c => c === 'บุคลากรสํานักงานบริหารคณะ').length;
+                            document.getElementById('countStaffHospital').textContent = stat_type.filter(c => c === 'บุคลากรโรงพยาบาล').length;
+                            document.getElementById('countCustomer').textContent = stat_type.filter(c => c === 'ผู้ใช้บริการโรงพยาบาล').length;
+
+                            document.getElementById('statSpeed').textContent = 'X̅ = ' + xbar_speed.toFixed(2) + '/ sd =' + sd_speed.toFixed(2);
+                            document.getElementById('statAccuracy').textContent = 'X̅ = ' + xbar_accuracy.toFixed(2) + '/ sd =' + sd_accuracy.toFixed(2);
+                            document.getElementById('statService').textContent = 'X̅ = ' + xbar_service.toFixed(2) + '/ sd =' + sd_service.toFixed(2);
+                            document.getElementById('xbarTotal').textContent = xbar_total.toFixed(2);
+                            document.getElementById('sdTotal').textContent = sd_total.toFixed(2);
+
+
+                            document.getElementById('progress-speed').style.width = (xbar_speed/5)*100 + '%';
+                            document.getElementById('progress-accuracy').style.width = (xbar_accuracy/5)*100 + '%';
+                            document.getElementById('progress-service').style.width = (xbar_service/5)*100 + '%';
+
+                            Swal.close();
+                         // console.log(stat_type.filter(c => c === 'อาจารย์').length);
+                         // console.log(getSD(stat_speed));
+
+                        })
+                        .catch(error => {
+                            Swal.fire({
+                                title: 'Error!',
+                                text:  error,
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                              });
+                            //console.error('GET Error:', error);
+                        });
+}
+
+
+// Arithmetic mean คำนวณหาค่าเฉลี่ยกลาง
+function getMean(data) {
+    return data.reduce(function (a, b) {
+        return Number(a) + Number(b);
+    }) / data.length;
+  }
+  
+  // Standard deviation คำนวณหาค่า SD
+  function getSD(data) {
+    let m = getMean(data);
+    return Math.sqrt(data.reduce(function (sq, n) {
+            return sq + Math.pow(n - m, 2);
+        }, 0) / (data.length - 1));
+  }
+
+
+// ฟังก์ชันที่ใช้รับค่าอีเมลจาก Google Apps Script และเก็บในตัวแปร
+    function onSuccess(users) {
+       const user = users[0];
+        if(user){
+          document.getElementById('showName').textContent = user.fullname;
+          document.getElementById('showPosition').textContent = user.position;
+          document.getElementById('showPhoto').src = user.image;
+          sessionStorage.setItem("username", user.fullname);
+
+          fetchData();
+        }else{
+             Swal.fire({
+                                title: 'Error!',
+                                text:  'ไม่พบข้อมูลผู้ใช้งานนี้ กรุณาติดต่อผู้ดูแลระบบ',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                              });
+        }
+      
+    }
+
+    // ฟังก์ชันที่เรียกใช้งานฟังก์ชันใน Google Apps Script
+    function getEmail() {
+      google.script.run.withSuccessHandler(onSuccess).doLogin();
+    }
+</script>
