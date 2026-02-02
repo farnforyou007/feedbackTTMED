@@ -6,3 +6,4 @@ node_modules/
 # .gitignore
 supabase-server/docker/.env
 supabase-server/docker/volumes/
+supabase-server
